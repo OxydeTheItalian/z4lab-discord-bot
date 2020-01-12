@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://z4lab.com/images/z4lab-logo.png" height="128" />
+    <img src="https://z4lab.com/images/discord-bot-transparent.png" height="280" />
     <h1 align="center">-# z4lab Discord Bot #-</h1>
     <strong>
          <p align="center">
