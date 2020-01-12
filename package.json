@@ -26,7 +26,8 @@
   "devDependencies": {},
   "scripts": {
     "db": "node dbScripts/createDB.js && node _mergeDB.js",
-    "reload": "node dbScripts/mergeDB.js"
+    "reload": "node dbScripts/mergeDB.js",
+    "update": "node dbScripts/updateDB.js"
   },
   "repository": {
     "type": "git",

@@ -31,6 +31,27 @@
     - config files will no longer effect the bot
 -   start bot with `pm2 start index.js`
 
+## database setup
+
+The bot will load the configs files first and then override them with the database.
+So don't remove the command files after merging the settings into the database.
+
+### first use
+
+-   run `npm db`
+-   run the bot normally
+
+### merging configs into database
+
+-   run `npm reload`
+-   reload or reboot the bot using the commands
+
+### updating database
+
+-   run `npm update`
+-   reboot the bot using the reboot command
+ 
+
 ## updating the bot's settings
 -   change settings in one of the `.json` files
 -   run `npm reload`
