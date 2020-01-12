@@ -111,3 +111,4 @@ jspm_packages/
 config/*.db
 commands/*/
 package-lock.json
+*.db
