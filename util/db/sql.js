@@ -5,7 +5,6 @@ const db = new bot.modules.core.sqlite3.Database(bot.modules.file.path.resolve(_
 
 sql.loadSettings = function (bot, channel = false, answer = false) {
     let setPresence = require(bot.modules.file.path.resolve(__dirname, "../presence"));
-    let finished = 0;
 
     db.all("SELECT * FROM config_bot", [], (err, rows) => {
         if (err) return err;
@@ -16,9 +15,8 @@ sql.loadSettings = function (bot, channel = false, answer = false) {
         global.bot.config.main.version.inName = Boolean(rows[4].value);
         global.bot.config.main.version.version = require(bot.modules.file.path.resolve(__dirname, "../../package.json")).version;
         setPresence(global.bot);
-        finished++;
         console.log(timestamp() + "[SQLite] Bot config loaded!");
-        if (channel && answer) answer.edit(answer.content + "\n```md\n[SQLite] "+finished+"/5 - Bot config loaded! ]:```");
+        if (channel && answer) answer.edit(answer.content + "\n```md\n[SQLite] - Bot config loaded! ]:```");
     });
 
     db.all("SELECT * FROM channels", [], (err, rows) => {
@@ -32,9 +30,8 @@ sql.loadSettings = function (bot, channel = false, answer = false) {
             if (row.channeltype === 3) global.bot.config.channels.log.channelID = row.channelid;
             if (row.channeltype === 4) global.bot.config.channels.memberCount.channelID = row.channelid;
         });
-        finished++;
         console.log(timestamp() + "[SQLite] Channel config loaded!");
-        if (channel && answer) answer.edit(answer.content + "\n```md\n[SQLite] "+finished+"/5 - Channel config loaded! ]:```");
+        if (channel && answer) answer.edit(answer.content + "\n```md\n[SQLite] - Channel config loaded! ]:```");
     });
 
     db.all("SELECT * FROM whitelist_roles", [], (err, rows) => {
@@ -47,9 +44,8 @@ sql.loadSettings = function (bot, channel = false, answer = false) {
             if (row.type === 1) global.bot.config.whitelist.allowedIDs.add.push(row.roleid);
             if (row.type === 2) global.bot.config.whitelist.allowedIDs.remove.push(row.roleid);
         });
-        finished++;
         console.log(timestamp() + "[SQLite] Role config loaded!");
-        if (channel && answer) answer.edit(answer.content + "\n```md\n[SQLite] "+finished+"/5 - Role config loaded! ]:```");
+        if (channel && answer) answer.edit(answer.content + "\n```md\n[SQLite] - Role config loaded! ]:```");
     });
 
     db.all("SELECT * FROM servers", [], (err, rows) => {
@@ -61,9 +57,8 @@ sql.loadSettings = function (bot, channel = false, answer = false) {
             global.bot.config.servers[row.name].type = row.type;
             global.bot.config.servers[row.name].rcon = row.rcon;
         });
-        finished++;
         console.log(timestamp() + "[SQLite] Server config loaded!");
-        if (channel && answer) answer.edit(answer.content + "\n```md\n[SQLite] "+finished+"/5 - Server config loaded! ]:```");
+        if (channel && answer) answer.edit(answer.content + "\n```md\n[SQLite] - Server config loaded! ]:```");
     });
 
     db.all("SELECT * FROM database", [], (err, rows) => {
@@ -75,9 +70,8 @@ sql.loadSettings = function (bot, channel = false, answer = false) {
             global.bot.config.dbs[row.name].password = row.password;
             global.bot.config.dbs[row.name].database = row.database;
         });
-        finished++;
         console.log(timestamp() + "[SQLite] Database config loaded!");
-        if (channel && answer) answer.edit(answer.content + "\n```md\n[SQLite] "+finished+"/5 - Database config loaded! ]:```").then(message=>{message.channel.send("```md\n[SQLite] Bot successfully reloaded! ]:```");});
+        if (channel && answer) answer.edit(answer.content + "\n```md\n[SQLite] - Database config loaded! ]:```");
 
         let mysql = require("mysql");
         global.bot.db = {};
@@ -85,7 +79,17 @@ sql.loadSettings = function (bot, channel = false, answer = false) {
         global.bot.db.db_pro = mysql.createConnection(global.bot.config.dbs.pro);
         global.bot.db.db_arena = mysql.createConnection(global.bot.config.dbs.arena);
         global.bot.db.db_whitelist = mysql.createConnection(global.bot.config.dbs.whitelist);
+        if (channel && answer) answer.edit(answer.content + "\n```md\n[SQLite] - Database connections reloaded! ]:```");
+
     });
+
+    if (channel && answer){
+        bot.loadCommands();
+        answer.edit(answer.content + "\n```md\n[Bot] - Commands reloaded! ]:```");
+        bot.loadEvents();
+        answer.edit(answer.content + "\n```md\n[Bot] - Events reloaded! ]:```");
+    }
+
 };
 
 sql.alias = {};
@@ -106,10 +110,10 @@ sql.alias.check = async function(bot, word) {
 sql.alias.insert = async function(bot, command, alias) {
 
     if (command === alias) return ["```md\n[Error] Can't bind command to command! ]:```", true];
-    
+
     var check = await sql.alias.check(global.bot, alias);
     var check2 = await sql.alias.check(global.bot, command);
-    
+
     if (check === command) return ["```md\n[Error] This bind is already existing! ]:```", true];
     if (check !== alias) return ["```md\n[Error] Bind already in use by < "+check+" >! ]:```", true];
     if (!global.bot.commands.get(command) && !global.bot.commands.get(check2)) return ["```md\n[Error] Given command is non existant! ]:```", true];
@@ -126,7 +130,7 @@ sql.alias.insert = async function(bot, command, alias) {
 };
 
 sql.alias.delete = async function(bot, alias) {
-    
+
     var check = await sql.alias.check(global.bot, alias);
     var error = false;
 
@@ -135,8 +139,8 @@ sql.alias.delete = async function(bot, alias) {
     db.run(`DELETE FROM alias WHERE alias = "${alias}";`, (err) => {
         if (err) {
             error = true;
-            throw err;                        
-        } 
+            throw err;
+        }
     });
 
     await global.bot.sleep(0.5);
@@ -144,7 +148,7 @@ sql.alias.delete = async function(bot, alias) {
     if (error) return ["```md\n[Error] Failed to delete bind! ]:```", true];
 
     return ["```md\n[Alias] Bind between < "+alias+" > and < "+check+" > successfully deleted! ]:```"];
-    
+
 };
 
 sql.alias.rename = async function(bot, oldAlias, newAlias) {
