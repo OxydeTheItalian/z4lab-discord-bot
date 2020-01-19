@@ -5,8 +5,7 @@
          <p align="center">
               A community discord bot for <a href="https://z4lab.com/">z4lab</a>.
          </p>
-    </strong><br><br>
-<br>
+    </strong>
 </p>
 
 ## features
