@@ -233,4 +233,21 @@ sql.whitelist.check = async function(userID) {
 
 };
 
+sql.whitelist.allowedAdd = async function(member) {
+
+    let { getUserLevel } = require("../permissionLvl");
+    let userLevel = getUserLevel(member), maxAccounts = 0, allowed = false;
+
+
+    db.all(`SELECT * FROM whitelist WHERE userID = "${member.id}"`, [], (err, rows) => {
+        if (err) console.log(err);
+        maxAccounts = userLevel > 2 ? Infinity : userLevel;
+        allowed = rows.length < maxAccounts;
+    });
+
+    await bot.sleep(1);
+    return allowed;
+
+};
+
 module.exports = sql;
