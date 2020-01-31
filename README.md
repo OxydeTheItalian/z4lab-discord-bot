@@ -33,7 +33,7 @@
 ## database setup
 
 The bot will load the configs files first and then override them with the database.
-So don't remove the command files after merging the settings into the database.
+So don't remove the config files after merging the settings into the database.
 
 ### first use
 
