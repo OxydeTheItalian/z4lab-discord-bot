@@ -83,7 +83,7 @@ sql.loadSettings = function (bot, channel = false, answer = false) {
 
     });
 
-    if (channel && answer){
+    if (channel && answer) {
         bot.loadCommands();
         answer.edit(answer.content + "\n```md\n[Bot] - Commands reloaded! ]:```");
         bot.loadEvents();
