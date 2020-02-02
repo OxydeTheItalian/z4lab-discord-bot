@@ -4,9 +4,7 @@ global.bot.rcon = {};
 
 
 //creating games
-global.bot.rcon.mc   = {}; // not supported switch to "rcon" module
 global.bot.rcon.csgo = {};
-global.bot.rcon.gmod = {}; // not supported switch to "rcon" module
 
 //creating csgo game modes
 global.bot.rcon.csgo.aim = {};
@@ -21,13 +19,6 @@ global.bot.rcon.csgo.surf.beginner = rconConnection({address:global.bot.config.s
 global.bot.rcon.csgo.surf.pro = rconConnection({address:global.bot.config.servers.pro.host+":"+global.bot.config.servers.pro.port, password: global.bot.config.servers.pro.rcon});
 global.bot.rcon.csgo.surf.vip = rconConnection({address:global.bot.config.servers["vip-surf"].host+":"+global.bot.config.servers["vip-surf"].port, password: global.bot.config.servers["vip-surf"].rcon});
 global.bot.rcon.csgo.surf.dev = rconConnection({address:global.bot.config.servers.dev.host+":"+global.bot.config.servers.dev.port, password: global.bot.config.servers.dev.rcon});
-
-//creating gmod server
-global.bot.rcon.gmod.ttt = {};
-
-//creating mc servers
-global.bot.rcon.mc.vanilla = {};
-global.bot.rcon.mc.ftb = {};
 
 //groups
 global.bot.rcon.groups = {};
