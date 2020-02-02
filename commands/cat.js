@@ -2,9 +2,8 @@ const Discord = require("discord.js");
 const superagent = require("superagent");
 
 module.exports.run = async (bot, message, args) => {
-    
-    let {body} = await superagent
-    .get("https://aws.random.cat/meow");
+
+    let { body } = await superagent.get("https://aws.random.cat/meow");
 
     let catembed = new Discord.RichEmbed()
     .setColor("RANDOM")

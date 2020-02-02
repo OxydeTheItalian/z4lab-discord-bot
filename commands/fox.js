@@ -2,10 +2,11 @@ const superagent = require("superagent");
 const { RichEmbed } = require("discord.js");
 
 module.exports.run = async (bot, message, args) => {
-    
+
     let { body } = await superagent.get("https://randomfox.ca/floof/");
 
     let catembed = new RichEmbed()
+    .setColor("RANDOM")
     .setTitle("here is a random fox for you")
     .setImage(body.image)
     .setTimestamp(new Date())
