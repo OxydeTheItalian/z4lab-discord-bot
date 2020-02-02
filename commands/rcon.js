@@ -65,26 +65,26 @@ module.exports.run = async (bot, message, args) => {
     if (single) {
 
         if (bot.rcon.csgo.aim[group]) {
-            bot.rcon.csgo.aim[group].connect().then(() => {
-                bot.rcon.csgo.aim[group].command(command).then(result => message.channel.send(group + ":\n```\n" + result + "```"))
+            bot.rcon.csgo.aim[group].rconConnection.connect().then(() => {
+                bot.rcon.csgo.aim[group].rconConnection.command(command).then(result => message.channel.send(group + ":\n```\n" + result + "```"))
                     .catch(error => {
                         message.channel.send(`Command error: ${error.message}`);
                         if (error.details && error.details.partialResponse) message.channel.send(group + `:\nPartial response: ${error.details.partialResponse}`);
                     });
-                bot.rcon.csgo.aim[group].disconnect().catch(error => {
+                bot.rcon.csgo.aim[group].rconConnection.disconnect().catch(error => {
                     return message.channel.send("```\n" + error + "```");
                 });
             }).catch(error => {
                 return message.channel.send("```\n" + error + "```");
             });
         } else if (bot.rcon.csgo.surf[group]) {
-            bot.rcon.csgo.surf[group].connect().then(() => {
-                bot.rcon.csgo.surf[group].command(command).then(result => message.channel.send(group + ":\n```\n" + result + "```"))
+            bot.rcon.csgo.surf[group].rconConnection.connect().then(() => {
+                bot.rcon.csgo.surf[group].rconConnection.command(command).then(result => message.channel.send(group + ":\n```\n" + result + "```"))
                     .catch(error => {
-                        message.channel.send(`Command error: ${error.message}`);
-                        if (error.details && error.details.partialResponse) message.channel.send(group + `:\nPartial response: ${error.details.partialResponse}`);
+                        message.channel.send(group + ` - Command error: ${error.message}`);
+                        if (error.details && error.details.partialResponse) message.channel.send(group + ` - Partial response: ${error.details.partialResponse}`);
                     });
-                bot.rcon.csgo.surf[group].disconnect().catch(error => {
+                bot.rcon.csgo.surf[group].rconConnection.disconnect().catch(error => {
                     return message.channel.send(group + ":\n```\n" + error + "```");
                 });
             }).catch(error => {
@@ -94,19 +94,19 @@ module.exports.run = async (bot, message, args) => {
     } else {
 
         bot.rcon.groups[group].forEach((rcon) => {
-            rcon.connect().then(() => {
-                rcon.command(command).then(result => message.channel.send("```\n" + result + "```"))
+            rcon.rconConnection.connect().then(() => {
+                rcon.rconConnection.command(command).then(result => message.channel.send(rcon.name + ": ```\n" + result + "```"))
                     .catch(error => {
-                        message.channel.send(`Command error: ${error.message}`).catch(error => {
-                            return message.channel.send("```\n" + error + "```");
+                        message.channel.send(rcon.name + ` - Command error: ${error.message}`).catch(error => {
+                            return message.channel.send(rcon.name + ": ```\n" + error + "```");
                         });
-                        if (error.details && error.details.partialResponse) message.channel.send(`Partial  response: ${error.details.partialResponse}`);
+                        if (error.details && error.details.partialResponse) message.channel.send(rcon.name + ` - Partial  response: ${error.details.partialResponse}`);
                     });
-                rcon.disconnect().catch(error => {
-                    return message.channel.send("```\n" + error + "```");
+                rcon.rconConnection.disconnect().catch(error => {
+                    return message.channel.send(rcon.name + ": ```\n" + error + "```");
                 });
             }).catch(error => {
-                return message.channel.send("```\n" + error + "```");
+                return message.channel.send(rcon.name + ": ```\n" + error + "```");
             });
         });
 
