@@ -5,10 +5,16 @@ const config = require("../config/bot.json");
 const steamapi = new SteamAPI(config.steam["api-key"]);
 const fixTime = require("../util/fixTime.js");
 
+/** 
+ * //TODO: recode the whole btop command
+ * 
+ * use the util/runtime.js function instead of the in-code version
+ */
+
 
 module.exports.run = function (bot, message, args){
-    return; //currently disabled until next bigger update
-    if (!args[0]) {
+    return;
+    /* if (!args[0]) {
         let embed = new RichEmbed()
             .setTitle('z4lab Discord Bot btop usage')
             .setThumbnail(bot.user.avatarURL)
@@ -49,6 +55,7 @@ module.exports.run = function (bot, message, args){
             return message.channel.send('```md\n# Bonus Record: Normal #\n\n[' + summary.nickname + '] holds the bonus ' + get[0].zonegroup + ' record on < ' + get[0].mapname + ' > with a time of < ' + minutes + ":" + seconds + "." + milli + ' > ! ]:```');
         });
     });
+    */
 };
 
 module.exports.help = {

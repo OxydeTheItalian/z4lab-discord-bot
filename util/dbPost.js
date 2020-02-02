@@ -101,8 +101,6 @@ var whitelistRemove = dbPost.whitelistRemove = async function whitelistRemove(my
 
         mysql.query("DELETE FROM `" + global.bot.config.dbs.whitelist.database + "`.`mysql_whitelist` WHERE (`steamid` = '" + id + "');", function (err) {
 
-            console.log(err);
-
             if (!err) {
                 steamapi.getUserSummary(global.bot.modules.core.steam.idconvert.convertTo64(String(id))).then(summary => {
 
