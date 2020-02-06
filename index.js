@@ -1,25 +1,23 @@
 const Discord = require("discord.js");
-const timestamp = require(__dirname+"/util/timeStamp");
 
-const config = require(__dirname+"/config/bot.json");
-const dbs = require(__dirname+"/config/dbs.json");
-const channels = require(__dirname+"/config/channels.json");
-const servers = require(__dirname+"/config/servers.json");
-const whitelist = require(__dirname+"/config/whitelist.json");
-
+// Bot Init Code
 
 const bot = new Discord.Client();
 bot.commands = new Discord.Collection();
 
 require(__dirname+"/util/modules")(bot);
 
-bot.config = {};
-bot.config.main = config;
-bot.config.dbs = dbs;
-bot.config.channels = channels;
-bot.config.servers = servers;
-bot.config.whitelist = whitelist;
+bot.config = {
+    main: require(__dirname+"/config/bot.json"),
+    dbs: require(__dirname+"/config/dbs.json"),
+    channels: require(__dirname+"/config/channels.json"),
+    servers: require(__dirname+"/config/servers.json"),
+    whitelist: require(__dirname+"/config/whitelist.json")
+};
 
+// Bot Functions
+
+bot.timestamp = require(__dirname+"/util/timeStamp");
 bot.sleep = function (ms) {
     return new Promise(resolve => {
         setTimeout(resolve, ms*1000);
@@ -43,7 +41,7 @@ bot.loadCommands = function() {
             delete require.cache[require.resolve(__dirname+`/commands/${f}`)];
             let props = require(__dirname+`/commands/${f}`); // from /commands folder
             //let date = bot.modifiedDate(__dirname+`/commands/${f}`);
-            //console.log(bot.modules.util.colors.white(timestamp(date)) + bot.modules.util.colors.grey(`[Command] ${f} loaded!`)); // console log print form module
+            //console.log(bot.modules.util.colors.white(bot.timestamp(date)) + bot.modules.util.colors.grey(`[Command] ${f} loaded!`)); // console log print form module
             bot.commands.set(props.help.name, props); // set files as command
         });
         console.log(bot.modules.util.colors.grey(`[Events] ${jsfile.length} commands loaded!`));
@@ -64,7 +62,7 @@ bot.loadEvents = function() {
             delete require.cache[require.resolve(__dirname+`/events/${f}`)];
             require(__dirname+`/events/${f}`); // from /events folder
             //let date = bot.modifiedDate(__dirname+`/events/${f}`);
-            //console.log(bot.modules.util.colors.white(timestamp(date)) + bot.modules.util.colors.grey(`[Event] ${f} loaded!`)); // console log print form module
+            //console.log(bot.modules.util.colors.white(bot.timestamp(date)) + bot.modules.util.colors.grey(`[Event] ${f} loaded!`)); // console log print form module
         });
         console.log(bot.modules.util.colors.grey(`[Events] ${jsfile.length} events loaded!`));
     });
@@ -74,16 +72,9 @@ bot.loadEvents = function() {
 bot.loadCommands();
 bot.loadEvents();
 
+// Bot Util Requires
+
 global.bot = bot;
-/*
-require(__dirname+"/events/error");
-require(__dirname+"/events/guildBanAdd");
-require(__dirname+"/events/guildBanRemove");
-require(__dirname+"/events/guildMemberAdd");
-require(__dirname+"/events/guildMemberRemove");
-require(__dirname+"/events/message");
-require(__dirname+"/events/ready");
-*/
 
 require(__dirname+"/util/console");
 require(__dirname+"/util/rconHandler");
