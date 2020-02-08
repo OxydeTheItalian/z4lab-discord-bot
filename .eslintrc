@@ -4,8 +4,8 @@
         "ecmaVersion": 8,
         "sourceType": "script",
         "ecmaFeatures": {
-            "jsx": true,
-            "experimentalObjectRestSpread": true
+            "jsx": false,
+            "experimentalObjectRestSpread": false
         }
     },
     "env": {
@@ -14,7 +14,10 @@
     "rules": {
         "indent": [
             "error",
-            "tab"
+            4
+        ],
+        "global-require": [
+            "error"
         ],
         "handle-callback-err": [
             "error"
