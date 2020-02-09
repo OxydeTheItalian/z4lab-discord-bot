@@ -14,7 +14,7 @@ function formatAMPM(date = new Date()) {
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour "0" should be "12"
     return fixTime(hours) + ":" + fixTime(minutes) + ":" + fixTime(seconds) + " " + ampm;
-  }
+}
 // https://stackoverflow.com/questions/13898423/javascript-convert-24-hour-time-of-day-string-to-12-hour-time-with-am-pm-and-no
 
 //[9/9/2019] - [10:24:50 PM]

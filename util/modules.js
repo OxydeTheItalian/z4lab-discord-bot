@@ -7,7 +7,7 @@
  * Even reloading them or the /util files would work way easier :)
  */
 
- // TODO: Move util functions into modules
+// TODO: Move util functions into modules
 
 module.exports = function (bot) {
 

@@ -4,12 +4,8 @@ module.exports = async function (input = false) {
 
     if (!input) return false;
 
-    try {
-        var id = await steamapi.resolve("'"+String(input)+"'");
-        if (id) input = id; 
-    } catch (e) {
-        throw (e);
-    }
+    var id = await steamapi.resolve("'"+String(input)+"'");
+    if (id) input = id; 
 
     input = global.bot.modules.core.steam.idconvert.convertToText(input);
 

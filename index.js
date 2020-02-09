@@ -37,7 +37,7 @@ bot.loadCommands = function() {
             console.log(bot.modules.util.colors.yellow("[WARNING] Couldn't find any commands!")); // no file err
             return; // leave
         }
-        jsfile.forEach((f, i) => { // gets all files
+        jsfile.forEach(f => { // gets all files
             delete require.cache[require.resolve(__dirname+`/commands/${f}`)];
             let props = require(__dirname+`/commands/${f}`); // from /commands folder
             //let date = bot.modifiedDate(__dirname+`/commands/${f}`);
@@ -58,7 +58,7 @@ bot.loadEvents = function() {
             console.log(bot.modules.util.colors.yellow("[WARNING] Couldn't find any events!")); // no file err
             return; // leave
         }
-        jsfile.forEach((f, i) => { // gets all files
+        jsfile.forEach(f => { // gets all files
             delete require.cache[require.resolve(__dirname+`/events/${f}`)];
             require(__dirname+`/events/${f}`); // from /events folder
             //let date = bot.modifiedDate(__dirname+`/events/${f}`);
@@ -79,4 +79,4 @@ global.bot = bot;
 require(__dirname+"/util/console");
 require(__dirname+"/util/rconHandler");
 
-bot.login(config.token);
+bot.login(bot.config.main.token);

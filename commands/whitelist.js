@@ -1,7 +1,5 @@
 const { RichEmbed } = require("discord.js");
 const dbPost = require("../util/dbPost");
-const dbRequest = require("../util/dbRequest");
-
 
 module.exports.run = async function (bot, message, args) {
 

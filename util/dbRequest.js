@@ -8,7 +8,7 @@ module.exports = dbRequest;
  * @param {string} server server name -- user input
  * @param {object} mysql beginner/pro server mysql connection
  */
-var getProfile = dbRequest.getProfile = async function getProfile(name, server, mysql) {
+dbRequest.getProfile = async function getProfile(name, server, mysql) {
 
     var result = {};
     result.error = {};
@@ -28,10 +28,13 @@ var getProfile = dbRequest.getProfile = async function getProfile(name, server, 
         }
         if (!get[0]) {
             result.error.id = 1;
-            result.error.name = "```md\n[Error] The user wasn\'t found in the database! ]:```";
+            result.error.name = "```md\n[Error] The user wasn't found in the database! ]:```";
             result.error.print = true;
             return result;
         }
+
+        /* eslint-disable no-unused-vars */
+
         let country = get[0].country;
         let points = get[0].points;
         let connections = get[0].connections;
@@ -45,6 +48,9 @@ var getProfile = dbRequest.getProfile = async function getProfile(name, server, 
         let wrbs = get[0].wrbs;
         let wrcps = get[0].wrcps;
         let sid = get[0].steamid;
+
+        /* eslint-enable no-unused-vars */
+
         mysql.query(`SELECT * FROM ck_playerrank WHERE style = '0' ORDER BY points DESC`, function (err, get) {
             if (err) {
                 result.error.id = 2;
@@ -79,7 +85,7 @@ var getProfile = dbRequest.getProfile = async function getProfile(name, server, 
  * @param {string}  server server name -- user input
  * @param {object}  mysql pro server mysql connection
  */
-var getMaptime = dbRequest.getMaptime = async function getMaptime(name, record, map, server, mysql) {
+dbRequest.getMaptime = async function getMaptime(name, record, map, server, mysql) {
 
     var result = {};
     result.error = {};
@@ -172,7 +178,7 @@ var getMaptime = dbRequest.getMaptime = async function getMaptime(name, record, 
  * @param {object} mysql0 beginner server mysql connection
  * @param {object} mysql1 pro server mysql connection
  */
-var getPlaytime = dbRequest.getPlaytime = async function getPlaytime(name, mysql0, mysql1) {
+dbRequest.getPlaytime = async function getPlaytime(name, mysql0, mysql1) {
 
     var result = {};
     result.error = {};
@@ -181,7 +187,6 @@ var getPlaytime = dbRequest.getPlaytime = async function getPlaytime(name, mysql
     result.error.print = false;
 
     var lastseen = '';
-    var firstseen = '';
     var timealive = '';
     var timespec = '';
     var timeonline = '';
@@ -197,21 +202,17 @@ var getPlaytime = dbRequest.getPlaytime = async function getPlaytime(name, mysql
             var proTime = pro;
             if (beginnerTime[0] && !proTime[0]) {
                 lastseen = beginnerTime[0].lastseen;
-                firstseen = beginnerTime[0].joined;
                 timealive = beginnerTime[0].timealive;
                 timespec = beginnerTime[0].timespec;
                 timeonline = timealive + timespec;
             } else if (!beginnerTime[0] && proTime[0]) {
                 lastseen = proTime[0].lastseen;
-                firstseen = proTime[0].joined;
                 timealive = proTime[0].timealive;
                 timespec = proTime[0].timespec;
                 timeonline = timealive + timespec;
             } else if (beginnerTime[0] && proTime[0] && beginnerTime[0].steamid64 == proTime[0].steamid64) {
                 if (beginnerTime[0].lastseen > proTime[0].lastseen) lastseen = beginnerTime[0].lastseen;
                 else lastseen = proTime[0].lastseen;
-                if (beginnerTime[0].firstseen < proTime[0].firstseen) firstseen = beginnerTime[0].firstseen;
-                else firstseen = proTime[0].firstseen;
                 timealive = beginnerTime[0].timealive + proTime[0].timealive;
                 timespec = beginnerTime[0].timespec + proTime[0].timespec;
                 timeonline = timealive + timespec;
@@ -258,7 +259,7 @@ var getPlaytime = dbRequest.getPlaytime = async function getPlaytime(name, mysql
  * getVipList function
  * @param {object}  mysql vip srv mysql connection
  */
-var getVipList = dbRequest.getVipList = async function getVipList(mysql) {
+dbRequest.getVipList = async function getVipList(mysql) {
 
     var result = {};
     result.error = false;
@@ -285,14 +286,10 @@ var getVipList = dbRequest.getVipList = async function getVipList(mysql) {
     await sleep(500);
 
     var longestName = 0;
-    var longestNameIndex = 0;
-    var i = 0;
 
     result.list.buffer.forEach(name => {
-        i++;
         if (longestName < name.length) {
             longestName = name.length;
-            longestNameIndex = i;
         } 
     });
 
@@ -303,7 +300,8 @@ var getVipList = dbRequest.getVipList = async function getVipList(mysql) {
         if (b.nickname > a.nickname) {
             return 1;
         }
-    return 0;});
+        return 0;
+    });
     result.list.array.reverse();
     result.list.array.forEach(user => {
         result.list.string += `[${user.nickname}]${String(".").repeat(longestName-user.nickname.length)} | <${user.steamid}> ]:\n`;
@@ -332,7 +330,7 @@ var getPlayerData = dbRequest.getPlayerData = async function getPlayerData(steam
  * @param {object}  mysql vip srv mysql connection
  * @param {strng}   id    steamID/steamID64 from given user -- userinput
  */
-var checkVipList = dbRequest.checkVipList = async function checkVipList(mysql, id) {
+dbRequest.checkVipList = async function checkVipList(mysql, id) {
 
     var result = {};
     result.error = false;

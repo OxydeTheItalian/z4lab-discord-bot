@@ -9,15 +9,14 @@
         }
     },
     "env": {
-        "node": true
+        "node": true,
+        "browser": true,
+        "es6": true
     },
     "rules": {
         "indent": [
             "error",
             4
-        ],
-        "global-require": [
-            "error"
         ],
         "handle-callback-err": [
             "error"

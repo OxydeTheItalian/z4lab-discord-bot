@@ -1,9 +1,11 @@
+/*
 const { RichEmbed } = require('discord.js');
 const steam = require('steamidconvert')();
 const SteamAPI = require('steamapi');
 const config = require("../config/bot.json");
 const steamapi = new SteamAPI(config.steam["api-key"]);
 const fixTime = require("../util/fixTime.js");
+*/
 
 /** 
  * //TODO: recode the whole btop command
@@ -12,7 +14,7 @@ const fixTime = require("../util/fixTime.js");
  */
 
 
-module.exports.run = function (bot, message, args){
+module.exports.run = function (bot, message, args) { /* eslint-disable-line no-unused-vars */
     return;
     /* if (!args[0]) {
         let embed = new RichEmbed()

@@ -12,6 +12,8 @@ module.exports.run = function (bot, message, args) {
     if (!args[0] && !commandlist.includes(args[0])) {
         //arena help embed
 
+        let prefix = bot.config.main.prefix;
+
         let embed = new RichEmbed()
             .setTitle('z4lab Discord Bot arena usage')
             .setThumbnail(bot.user.avatarURL)
@@ -25,7 +27,7 @@ module.exports.run = function (bot, message, args) {
 
         let count = args[0].substr(3, 1);
 
-        db_arena.query(`SELECT * FROM rankme ORDER BY score DESC LIMIT ${count}`, function (err, get) {
+        bot.db.db_arena.query(`SELECT * FROM rankme ORDER BY score DESC LIMIT ${count}`, function (err, get) {
 
             if (err) return console.log(err);
 
@@ -68,8 +70,8 @@ module.exports.run = function (bot, message, args) {
         });
     }
     if (args[0] == 'profile') {
-        if (!args[1]) return message.channel.send('```md\n[Error] No Name entered! ]:\n\n[Usage] : ' + prefix + 'arena profile [Name] ]:```');
-        db_arena.query(`SELECT * FROM rankme WHERE name LIKE '%${args[1]}%' ORDER BY score DESC LIMIT 1`, function (err, get) {
+        if (!args[1]) return message.channel.send('```md\n[Error] No Name entered! ]:\n\n[Usage] : ' + bot.config.main.prefix + 'arena profile [Name] ]:```');
+        bot.db.db_arena.query(`SELECT * FROM rankme WHERE name LIKE '%${args[1]}%' ORDER BY score DESC LIMIT 1`, function (err, get) {
             if (err) return console.log(err);
             if (!get[0]) return message.channel.send('```md\n[Error] The user wasn\'t found in the database! ]:```');
             let user = [];
@@ -92,7 +94,9 @@ module.exports.run = function (bot, message, args) {
 
             var sid = user[0].sid;
             var rank = 0;
-            db_arena.query(`SELECT * FROM rankme ORDER BY score DESC`, function (err, get) {
+            bot.db.db_arena.query(`SELECT * FROM rankme ORDER BY score DESC`, function (err, get) {
+                if (err) return console.error(err);
+
                 for (var i = 0; i < get.length; i++) {
                     if (get[i].steam == sid) rank = i + 1;
                 }
@@ -111,8 +115,8 @@ module.exports.run = function (bot, message, args) {
         });
     }
     if (args[0] == 'weaponstats') {
-        if (!args[1]) return message.channel.send('```md\n[Error] No Name entered! ]:\n\n[Usage] : ' + prefix + 'arena weaponstats [Name] ]:```');
-        db_arena.query(`SELECT * FROM rankme WHERE name LIKE '%${args[1]}%' ORDER BY score DESC LIMIT 1`, function (err, get) {
+        if (!args[1]) return message.channel.send('```md\n[Error] No Name entered! ]:\n\n[Usage] : ' + bot.config.main.prefix + 'arena weaponstats [Name] ]:```');
+        bot.db.db_arena.query(`SELECT * FROM rankme WHERE name LIKE '%${args[1]}%' ORDER BY score DESC LIMIT 1`, function (err, get) {
             if (err) return console.log(err);
             if (!get[0]) return message.channel.send('```md\n[Error] The user wasn\'t found in the database! ]:```');
             let user = [];

@@ -46,5 +46,5 @@ db.run(`CREATE TABLE IF NOT EXISTS \`whitelist\` (
 
 setTimeout(function(){insert(db);}, 1000);
 function insert(db) {
-	db.run(`INSERT INTO config_bot (option,value) VALUES ("botToken", ""),("botPrefix", ""),("steamApiKey", ""),("presencePrefix","z4lab.com |"),("versionInName","true");`);
+    db.run(`INSERT INTO config_bot (option,value) VALUES ("botToken", ""),("botPrefix", ""),("steamApiKey", ""),("presencePrefix","z4lab.com |"),("versionInName","true");`);
 }

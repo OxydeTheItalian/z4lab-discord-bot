@@ -11,7 +11,7 @@ module.exports = dbPost;
  * @param {string} id player id -- user input -- indirectly
  * @param {object} mysql vsurf server mysql connection
  */
-var whitelistAdd = dbPost.whitelistAdd = async function whitelistAdd(mysql, id, author) {
+dbPost.whitelistAdd = async function whitelistAdd(mysql, id, author) {
 
     var result = {};
     result.error = false;
@@ -83,7 +83,7 @@ var whitelistAdd = dbPost.whitelistAdd = async function whitelistAdd(mysql, id, 
  * @param {string} id player id -- user input -- indirectly
  * @param {object} mysql vsurf server mysql connection
  */
-var whitelistRemove = dbPost.whitelistRemove = async function whitelistRemove(mysql, id) {
+dbPost.whitelistRemove = async function whitelistRemove(mysql, id) {
 
     var result = {};
     result.error = false;
