@@ -16,6 +16,8 @@ module.exports.run = async function (bot, message, args) {
     let map = args[0];
     var record = false;
     var username = null;
+    
+    //todo: wtf is this?? you drunk or something XDD???
     var name = 'AND 1=1';
     if (args[1] && args[1].toLowerCase() != 'pro' && args[1].toLowerCase() != 'beginner') {
         name = "AND name LIKE '%" + String(args[1]) + "%'";
