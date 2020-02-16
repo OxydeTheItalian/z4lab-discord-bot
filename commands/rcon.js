@@ -1,3 +1,8 @@
+/*
+~/aceToday at 9:13 PM
+you wanna comment something for me :slight_smile:
+*/
+
 const Discord = require("discord.js");
 
 module.exports.run = async (bot, message, args) => {
